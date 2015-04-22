@@ -202,7 +202,7 @@ def Key_Stats(gather=["Total Debt/Equity",
 
                     difference = stock_p_change - sp500_p_change
 
-                    if difference > 0:
+                    if difference > 5:
                         status = "outperform"
                     else:
                         status = "underperform"
@@ -262,7 +262,7 @@ def Key_Stats(gather=["Total Debt/Equity",
                 except Exception as e:
                     pass
 
-    df.to_csv("key_stats_acc_perf_WITH_NA.csv")
+    df.to_csv("key_stats_acc_perf_WITH_NA_enhanced.csv")
 
 
 Key_Stats()
