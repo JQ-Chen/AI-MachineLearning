@@ -1,6 +1,7 @@
 """main.py contains main"""
 
 from investmodel import InvestmentModel
+import json
 import pickle
 
 def main():
@@ -13,7 +14,7 @@ def main():
     im.train()
     results = im.test()
 
-    print results
-
+    print json.dumps(results, indent=4, sort_keys=True) 
+  
 if __name__ == "__main__":
     main()
