@@ -33,4 +33,4 @@ def get_tickers():
     return response
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(host='aiproject.zachcotter.com', port=5000)
