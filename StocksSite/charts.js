@@ -6,6 +6,31 @@ $.ajax({
         success: function(data) {processCSV(data);}
      });
 
+$.ajax({
+  type: "GET",
+  url: "http://localhost:5000/tickers",
+  dataType: "json",
+  success: function(data) {processTickers(data);}
+});
+
+function processTickers(tickers){
+  //ajax each for investability
+  //update glyph
+  var rowCount = 0;
+  var row = "<div class='row'>"
+  tickers.forEach(function(ticker){
+    rowCount++;
+    row += "<div class='col-md-2'><div class='stock'><h4 class='" + ticker + "'>" + ticker +
+    "<span class='glyphicon'></span></h4></div></div>"
+    if(rowCount == 6){
+      row += "</div>"
+      $('.stocks').append(row);
+      row = "<div class='row'>"
+      rowCount = 0;
+    }
+  });
+}
+
 function processCSV(data){
   var lines = data.split(/\r\n|\n/);
   var series = lines[0].split(',');
