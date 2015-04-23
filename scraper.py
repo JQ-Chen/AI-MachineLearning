@@ -32,20 +32,20 @@ class YahooScraper():
         source = self.get_latest_source(ticker)
         feature_vector = self.scrape(source)
 
-        feature_vector["stock_p_change"] = self.get_stock_p_change()
+        feature_vector["stock_p_change"] = self.get_stock_p_change(ticker)
         feature_vector["sp500_p_change"] = self.get_sp500_p_change()
 
         x = []
 
         for f in self.features:
             if feature_vector[f] == "N/A":
-                x.append(0)
-
-            x.append(feature_vector[f])
+                x.append(0.0)
+            else:
+                x.append(feature_vector[f])
 
         evaluation = self.model.predict(x)[0]
 
-        return bool(evaluation)
+        return evaluation
 
     def get_stock_p_change(self, ticker):
         """Gets the percentage change between the current stock price and
@@ -55,13 +55,13 @@ class YahooScraper():
         :returns: a tuple of the stock pct change and the current stock value
         """
 
-        url = "http://finance.yahoo.com/d/quotes.csv?s=" + ticker + "&f=bm6"
-        
+        url = "http://finance.yahoo.com/d/quotes.csv?s=" + ticker + "&f=pm6"
+
         resp = requests.get(url)
         results = resp.text.split(',')
 
-        current_price = results[0]
-        percent_change = float(results[1][1:-1]) / 100
+        current_price = float(results[0])
+        percent_change = float(results[1][1:-2]) / 100
 
         return (percent_change, current_price)
 
