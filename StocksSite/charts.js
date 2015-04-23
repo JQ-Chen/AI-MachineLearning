@@ -21,7 +21,7 @@ function processTickers(tickers){
   tickers.forEach(function(ticker){
     rowCount++;
     row += "<div class='col-md-2'><div class='stock'><h4 class='" + ticker + "'>" + ticker +
-    "<span class='glyphicon'></span></h4></div></div>"
+    "<span class='" + ticker + " glyphicon'></span></h4></div></div>"
     if(rowCount == 6){
       row += "</div>"
       $('.stocks').append(row);
@@ -29,6 +29,24 @@ function processTickers(tickers){
       rowCount = 0;
     }
   });
+  tickers.forEach(function(ticker){
+    $.ajax({
+      type: "GET",
+      url: "http://localhost:5000/?ticker=" + ticker,
+      dataType: "text",
+      success: function(data) {processTicker(ticker, data);}
+    });
+  });
+}
+
+function processTicker(ticker, data){
+  var glyph = ticker + " glyphicon glyphicon-";
+  if(data == "1"){
+    glyph += "ok"
+  }else{
+    glyph += "remove"
+  }
+  $('.glyphicon.' + ticker).attr('class', glyph);
 }
 
 function processCSV(data){

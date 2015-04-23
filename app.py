@@ -21,9 +21,9 @@ def get_yahoo_scraper():
 
 ys = get_yahoo_scraper()
 
-@app.route('/', methods=['POST'])
+@app.route('/', methods=['GET'])
 def check_ticker():
-    ticker = request.form['ticker']
+    ticker = request.args.get("ticker")
     return str(ys.check_invest(ticker))
 
 @app.route('/tickers', methods=['GET'])
