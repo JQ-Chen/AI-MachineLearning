@@ -9,6 +9,7 @@ from sklearn.svm import SVC
 
 import numpy as np
 import pandas as pd
+import pickle
 
 class InvestmentModel():
     """Models an investment strategy using an SVC"""
@@ -42,6 +43,17 @@ class InvestmentModel():
         df = df.replace("NaN",0).replace("N/A",0)
 
         return df
+
+    def save_model(self, path):
+        """Saves the model to a pickle.
+
+        :param path: where to save the pickle
+        """
+
+        if not self.model:
+            raise ValueError("Model must be trained before saving")
+
+        pickle.dump(self.model, open(path, 'w'))
 
     def get_X_y(self):
         """Builds an X, y feature/target pair from the data.
