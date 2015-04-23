@@ -8,7 +8,7 @@ $.ajax({
 
 $.ajax({
   type: "GET",
-  url: "http://localhost:5000/tickers",
+  url: "http://aiproject.zachcotter.com:5000/tickers",
   dataType: "json",
   success: function(data) {processTickers(data);}
 });
@@ -32,7 +32,7 @@ function processTickers(tickers){
   tickers.forEach(function(ticker){
     $.ajax({
       type: "GET",
-      url: "http://localhost:5000/?ticker=" + ticker,
+      url: "http://aiproject.zachcotter.com:5000/?ticker=" + ticker,
       dataType: "text",
       success: function(data) {processTicker(ticker, data);}
     });
