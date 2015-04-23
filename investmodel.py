@@ -122,6 +122,8 @@ class InvestmentModel():
         stock_change = np.array(self.data["stock_p_change"])
         sp500_change = np.array(self.data["sp500_p_change"])
 
+        df_invest = pd.DataFrame(columns=["Market Return", "Strategy Return"])
+
         for i in xrange(0, len(X_test)):
 
             predicted = self.model.predict(X_test[i])[0]
@@ -138,5 +140,11 @@ class InvestmentModel():
 
                 strategy_return += self.invest_amount + stock_invest_gain
                 market_return += self.invest_amount + sp500_invest_gain
+
+                df_invest = df_invest.append({"Strategy Return": strategy_return,
+                                              "Market Return": market_return},
+                                              ignore_index=True)
+
+        df_invest.to_csv('return.csv', index=False)
 
         return self.analysis(num_invest, num_correct, strategy_return, market_return)
