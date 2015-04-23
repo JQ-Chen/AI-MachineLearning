@@ -66,4 +66,3 @@ function buildGraph(titles, data){
       series: series
   });
 }
-
