@@ -4,10 +4,19 @@ div.graph {
     margin: 0 auto;
 }
 
-h1, h2, h3 {
+div.header {
   background-color: #2a2a2b;
-  font-size: 50px;
   color: #cccccc;
+  width: 100%;
+}
+
+div.sub {
+  padding-left: 50px;
+  padding-right: 50px;
+}
+
+h1, h2, h3 {
+  font-size: 50px;
   padding: 30px;
   text-align: center;
 }
@@ -19,7 +28,43 @@ h1 {
 h2 {
   margin-top: 0px;
   font-size: 40px;
+  margin-bottom: 0px;
+  padding-bottom: 15px;
 }
+
+p.authors {
+  text-align: center;
+  font-size: 30px;
+  margin-top: 0px;
+  padding-bottom: 30px;
+}
+
+div.nav {
+  padding-bottom: 90px;
+  margin: 45px auto;
+  font-size: 30px;
+  width: 100%;
+}
+
+a:link, a:visited, a:hover, a:active {
+  color: #3686be;
+  width: 50%;
+}
+
+div.left {
+  width: 50%;
+  float: left;
+  margin: 0 auto;
+  text-align: center;
+}
+
+div.right {
+  width: 50%;
+  float: left;
+  margin: 0 auto;
+  text-align: center;
+}
+
 
 h3 {
   font-size: 30px;
