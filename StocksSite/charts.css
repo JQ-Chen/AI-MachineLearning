@@ -1,0 +1,36 @@
+div.graph {
+    min-width: 310px;
+    height: 400px;
+    margin: 0 auto;
+}
+
+h1, h2, h3 {
+  background-color: #2a2a2b;
+  font-size: 50px;
+  color: #cccccc;
+  padding: 30px;
+  text-align: center;
+}
+
+h1 {
+  margin-bottom: 0px;
+}
+
+h2 {
+  margin-top: 0px;
+  font-size: 40px;
+}
+
+h3 {
+  font-size: 30px;
+}
+
+html, body {
+  background-color: #3686be;
+  font-family: 'Rosario', sans-serif;
+}
+
+body {
+  width: 80%;
+  margin: 0 auto;
+}
