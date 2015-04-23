@@ -2,6 +2,7 @@
 scraper.py defines the YahooScraper class to scrape yahoo for finance data.
 """
 
+import datetime
 import pickle
 import re
 import requests
@@ -55,15 +56,13 @@ class YahooScraper():
         :returns: a tuple of the stock pct change and the current stock value
         """
 
-        url = "http://finance.yahoo.com/d/quotes.csv?s=" + ticker + "&f=pm6"
+        current_price = float(self.get_price(ticker))
 
-        resp = requests.get(url)
-        results = resp.text.split(',')
+        one_year_ago = datetime.datetime.now() - datetime.timedelta(days=365)
+        old_price = float(self.get_price(ticker, one_year_ago))
+        percent_change = ((old_price - current_price) / current_price) * 100
 
-        current_price = float(results[0])
-        percent_change = float(results[1][1:-2]) / 100
-
-        return (percent_change, current_price)
+        return round(percent_change, 2)
 
     def get_sp500_p_change(self):
         """Get the percentage change between the current S&P500 price and
@@ -72,8 +71,38 @@ class YahooScraper():
         :returns: a tuple of the S&P500 pct change and the current S&P500 value
         """
 
-        url = "http://finance.yahoo.com/d/quotes.csv?s=^GSPC&f=bm6"
-        return (0.0, 0.0)
+        # for testing
+        retrun (1.0, 1.0)
+        #return self.get_stock_p_change("SANDP")
+
+    def get_price(self, ticker, date=None):
+        """Gets the stock price of a given ticker
+
+        :param ticker: the stock ticker
+        :param date: the date to get the price for
+        :returns: the stock price
+        """
+
+        if not date:
+            date = datetime.datetime.now()
+
+        day_before = date - datetime.timedelta(days=1)
+        url = ''.join(['https://www.quandl.com/api/v1/datasets/WIKI/',
+                      ticker,
+                      '.csv?sort_order=asc&trim_start=',
+                      str(day_before.date()),
+                      '&trim_end=',
+                      str(date.date()),
+                      '&exclude_headers=true'])
+
+        resp = requests.get(url)
+        body = resp.text
+
+        if resp.status_code == 500:
+            raise ValueError("Invalid ticker")
+
+        # this is pretty lame, should probably be replaced
+        return resp.text.split(",")[4]
 
     def get_latest_source(self, ticker):
         """Gets the most recent Yahoo Finance data for a ticker
